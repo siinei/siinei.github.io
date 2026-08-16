@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>당신의 연인이 배정되었습니다</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f4f0;
+      color: #1d252c;
+      overflow-x: hidden;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      background:
+        radial-gradient(circle at 70% 20%, #f4cbd5 0%, transparent 28%),
+        linear-gradient(135deg, #faf9f6, #e8e6df);
+      text-align: center;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: #777;
+      margin-bottom: 30px;
+    }
+
+    .phone {
+      width: 290px;
+      max-width: 80vw;
+      min-height: 570px;
+      padding: 12px;
+      border-radius: 40px;
+      background: #111;
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.25);
+      transform: rotate(-3deg);
+      transition: transform 0.5s ease;
+    }
+
+    .phone:hover {
+      transform: rotate(0deg) translateY(-8px);
+    }
+
+    .phone-screen {
+      min-height: 546px;
+      padding: 30px 20px;
+      border-radius: 31px;
+      background: #eef1f4;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phone-time {
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 55px;
+    }
+
+    .message {
+      padding: 22px;
+      background: white;
+      border-radius: 20px 20px 20px 6px;
+      text-align: left;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+
+    .message-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: #9b5366;
+      font-weight: bold;
+    }
+
+    .message-title {
+      margin: 18px 0;
+      font-size: 29px;
+      line-height: 1.1;
+    }
+
+    .message-text {
+      color: #777;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .start-button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #1d252c;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Common Sections */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 140px 30px;
+    }
+
+    .section-label {
+      display: block;
+      margin-bottom: 25px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #888;
+      font-weight: bold;
+    }
+
+    .section-title {
+      font-size: clamp(42px, 7vw, 80px);
+      line-height: .95;
+      letter-spacing: -4px;
+      margin-bottom: 45px;
+    }
+
+    .section-text {
+      max-width: 650px;
+      margin-left: auto;
+      color: #70777d;
+      line-height: 2;
+      font-size: 16px;
+    }
+
+    /* Story */
+    #story {
+      background: #f5f4f0;
+    }
+
+    .story-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 140px 30px;
+    }
+
+    .story-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .story-body p {
+      color: #6d747a;
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+
+    .story-visual {
+      aspect-ratio: 4 / 5;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .placeholder-image {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #d9d6cf, #aaa79f);
+      color: white;
+      letter-spacing: 3px;
+      font-size: 11px;
+    }
+
+    /* World */
+    .world-section {
+      background: #dfe7ea;
+    }
+
+    .world-card {
+      padding: 80px 60px;
+      background: rgba(255,255,255,.6);
+      backdrop-filter: blur(15px);
+    }
+
+    .world-card p {
+      max-width: 650px;
+      color: #687177;
+      line-height: 2;
+    }
+
+    /* Characters */
+    .characters {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 140px 30px;
+    }
+
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 70px;
+    }
+
+    .character-card {
+      background: white;
+      border: 1px solid rgba(0,0,0,.08);
+      overflow: hidden;
+      transition: transform .4s ease, box-shadow .4s ease;
+    }
+
+    .character-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(0,0,0,.1);
+    }
+
+    .character-image {
+      aspect-ratio: 4 / 5;
+    }
+
+    .character-info {
+      padding: 28px;
+    }
+
+    .character-number {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: #888;
+    }
+
+    .character-name {
+      margin: 10px 0;
+      font-size: 28px;
+    }
+
+    .character-description {
+      color: #70777d;
+      line-height: 1.8;
+      font-size: 13px;
+    }
+
+    .character-trait {
+      display: block;
+      margin-top: 20px;
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+
+    .hyomin {
+      background: linear-gradient(145deg, #dc91a5, #a9526c);
+    }
+
+    .serim {
+      background: linear-gradient(145deg, #dfcb96, #948052);
+    }
+
+    .daeun {
+      background: linear-gradient(145deg, #55575c, #191b20);
+    }
+
+    .jia {
+      background: linear-gradient(145deg, #9cb4cf, #435d7d);
+    }
+
+    .harin {
+      background: linear-gradient(145deg, #a6c0ae, #557260);
+    }
+
+    /* Relationship */
+    .relationship-section {
+      background: #20272d;
+      color: white;
+    }
+
+    .relationship-section .section {
+      padding-bottom: 160px;
+    }
+
+    .relationship-list {
+      margin-top: 60px;
+      border-top: 1px solid rgba(255,255,255,.2);
+    }
+
+    .relationship-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 25px 0;
+      border-bottom: 1px solid rgba(255,255,255,.2);
+    }
+
+    .relationship-item span {
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    /* Ending */
+    .ending {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 25px;
+    }
+
+    .ending-title {
+      font-size: clamp(50px, 10vw, 110px);
+      letter-spacing: -5px;
+      margin: 20px 0;
+    }
+
+    .ending-text {
+      color: #777;
+      margin-bottom: 30px;
+    }
+
+    .ending-button {
+      padding: 15px 25px;
+      border: none;
+      border-radius: 12px;
+      background: #1d252c;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Scroll Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .9s ease, transform .9s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      .phone {
+        width: 270px;
+      }
+
+      .section,
+      .story-wrap,
+      .characters {
+        padding-top: 100px;
+        padding-bottom: 100px;
+      }
+
+      .story-body {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+
+      .character-grid {
+        grid-template-columns: 1fr;
+        margin-top: 45px;
+      }
+
+      .world-card {
+        padding: 45px 25px;
+      }
+
+      .section-title {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+
+    <span class="hero-label">
+      REPUBLIC OF KOREA / JEONGYEON ACT
+    </span>
+
+    <div class="phone">
+      <div class="phone-screen">
+
+        <div class="phone-time">
+          09:17
+        </div>
+
+        <div class="message">
+
+          <div class="message-label">
+            GOVERNMENT OFFICIAL NOTICE
+          </div>
+
+          <h1 class="message-title">
+            당신의 연인이<br>
+            배정되었습니다.
+          </h1>
+
+          <p class="message-text">
+            정연법에 따라 국가가 당신의 법적 연인을
+            지정했습니다. 자세한 내용은 아래에서 확인할 수 있습니다.
+          </p>
+
+          <button class="start-button" id="startButton">
+            배정 내용 확인
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- Story -->
+  <section id="story">
+
+    <div class="story-wrap">
+
+      <p class="section-label reveal">
+        THE STORY
+      </p>
+
+      <h2 class="section-title reveal">
+        모든 것이 끝나기 전에,<br>
+        당신을 알고 싶었어요.
+      </h2>
+
+      <div class="story-body">
+
+        <div class="reveal">
+
+          <p>
+            대한민국은 저출산 문제를 해결하기 위해
+            새로운 법을 시행했다.
+          </p>
+
+          <p>
+            이름은 정연법.
+            국가는 국민의 성향과 조건을 분석하여
+            가장 적합한 연인을 직접 지정한다.
+          </p>
+
+          <p>
+            그리고 어느 평범한 학교생활의 아침,
+            주인공의 휴대전화에 한 통의 문자가 도착한다.
+          </p>
+
+          <p>
+            <strong>
+              「당신의 연인이 배정되었습니다.」
+            </strong>
+          </p>
+
+        </div>
+
+        <div class="story-visual reveal">
+          <div class="placeholder-image">
+            STORY IMAGE PLACEHOLDER
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- World -->
+  <section class="world-section">
+
+    <div class="section">
+
+      <div class="world-card reveal">
+
+        <p class="section-label">
+          THE JEONGYEON ACT
+        </p>
+
+        <h2 class="section-title">
+          사랑마저<br>
+          국가가 정한다.
+        </h2>
+
+        <p>
+          학교에서는 평범한 일상이 계속된다.
+          수업을 듣고, 친구들과 점심을 먹고,
+          복도를 걸으며 서로의 이야기를 나눈다.
+          하지만 정연법으로 인해 평범했던 관계는
+          조금씩 달라지기 시작한다.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Characters -->
+  <section class="characters">
+
+    <p class="section-label reveal">
+      CHARACTERS
+    </p>
+
+    <h2 class="section-title reveal">
+      다섯 명의 사람,<br>
+      다섯 가지의 관계.
+    </h2>
+
+    <div class="character-grid">
+
+
+      <!-- Kim Hyomin -->
+      <article class="character-card reveal">
+
+        <div class="character-image placeholder-image hyomin">
+          CHARACTER IMAGE
+        </div>
+
+        <div class="character-info">
+
+          <span class="character-number">
+            01 / FIRST YEAR
+          </span>
+
+          <h3 class="character-name">
+            김효민
+          </h3>
+
+          <p class="character-description">
+            누구에게나 친절하고 살가운 1학년.
+            어린 시절 자신을 도와준 주인공을 오랫동안 기억하고 있다.
+          </p>
+
+          <span class="character-trait">
+            TRAIT — DEVOTED
+          </span>
+
+        </div>
+
+      </article>
+
+
+      <!-- Park Serim -->
+      <article class="character-card reveal">
+
+        <div class="character-image placeholder-image serim">
+          CHARACTER IMAGE
+        </div>
+
+        <div class="character-info">
+
+          <span class="character-number">
+            02 / SECOND YEAR
+          </span>
+
+          <h3 class="character-name">
+            박세림
+          </h3>
+
+          <p class="character-description">
+            도도하고 자존심이 강한 2학년.
+            정연법에 의해 주인공의 법적 연인으로 지정된다.
+          </p>
+
+          <span class="character-trait">
+            TRAIT — PROUD
+          </span>
+
+        </div>
+
+      </article>
+
+
+      <!-- Lee Daeun -->
+      <article class="character-card reveal">
+
+        <div class="character-image placeholder-image daeun">
+          CHARACTER IMAGE
+        </div>
+
+        <div class="character-info">
+
+          <span class="character-number">
+            03 / SECOND YEAR
+          </span>
+
+          <h3 class="character-name">
+            이다은
+          </h3>
+
+          <p class="character-description">
+            주인공의 소꿉친구.
+            무심한 척 행동하지만 누구보다 세심하게 주인공을 챙긴다.
+          </p>
+
+          <span class="character-trait">
+            TRAIT — CONSIDERATE
+          </span>
+
+        </div>
+
+      </article>
+
+
+      <!-- Seo Jia -->
+      <article class="character-card reveal">
+
+        <div class="character-image placeholder-image jia">
+          CHARACTER IMAGE
+        </div>
+
+        <div class="character-info">
+
+          <span class="character-number">
+            04 / THIRD YEAR
+          </span>
+
+          <h3 class="character-name">
+            서지아
+          </h3>
+
+          <p class="character-description">
+            학교에서는 차갑고 강한 이미지로 유명한 3학년.
+            하지만 주인공에게는 유독 다정한 모습을 보여준다.
+          </p>
+
+          <span class="character-trait">
+            TRAIT — INTENSE
+          </span>
+
+        </div>
+
+      </article>
+
+
+      <!-- Ryu Harin -->
+      <article class="character-card reveal">
+
+        <div class="character-image placeholder-image harin">
+          CHARACTER IMAGE
+        </div>
+
+        <div class="character-info">
+
+          <span class="character-number">
+            05 / HOMEROOM TEACHER
+          </span>
+
+          <h3 class="character-name">
+            류하린
+          </h3>
+
+          <p class="character-description">
+            주인공 반의 담임교사.
+            학생들을 아끼지만 첫 담임 업무로 인해 혼자 있을 때는
+            조금 지쳐 있는 모습을 보인다.
+          </p>
+
+          <span class="character-trait">
+            TRAIT — RESPONSIBLE
+          </span>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- Relationship -->
+  <section class="relationship-section">
+
+    <div class="section">
+
+      <p class="section-label reveal">
+        YOUR RELATIONSHIP
+      </p>
+
+      <h2 class="section-title reveal">
+        배정은 시작일 뿐이다.
+      </h2>
+
+      <div class="relationship-list reveal">
+
+        <div class="relationship-item">
+          <span>JEONGYEON ACT</span>
+          <strong>ASSIGNED</strong>
+        </div>
+
+        <div class="relationship-item">
+          <span>SCHOOL LIFE</span>
+          <strong>UNPREDICTABLE</strong>
+        </div>
+
+        <div class="relationship-item">
+          <span>RELATIONSHIP</span>
+          <strong>YOUR CHOICE</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Ending -->
+  <section class="ending">
+
+    <span class="section-label reveal">
+      YOUR STORY STARTS HERE
+    </span>
+
+    <h2 class="ending-title reveal">
+      그리고,
+    </h2>
+
+    <p class="ending-text reveal">
+      당신은 누구와 함께하게 될까?
+    </p>
+
+    <button class="ending-button reveal" id="backToTop">
+      문자 다시 보기
+    </button>
+
+  </section>
+
+
+  <script>
+
+    /* Scroll Reveal */
+    const observer = new IntersectionObserver(
+      (entries) => {
+
+        entries.forEach((entry) => {
+
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+
+        });
+
+      },
+      {
+        threshold: 0.12
+      }
+    );
+
+    document
+      .querySelectorAll(".reveal")
+      .forEach((element) => observer.observe(element));
+
+
+    /* Start Story */
+    document
+      .getElementById("startButton")
+      .addEventListener("click", () => {
+
+        document
+          .getElementById("story")
+          .scrollIntoView({
+            behavior: "smooth"
+          });
+
+      });
+
+
+    /* Back To Top */
+    document
+      .getElementById("backToTop")
+      .addEventListener("click", () => {
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      });
+
+  </script>
+
+</body>
+</html>
